@@ -59,7 +59,7 @@ app.get("/", async (req, res) => {
           "Content-Type": "image/png",
         });
 
-        res.download(buffer, "image.png");
+        res.end(buffer);
       });
     }
   );
