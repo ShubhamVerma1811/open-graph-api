@@ -10,7 +10,8 @@ app.use(urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
   if (!req.body?.title) {
-    res.status(200).send("Missing title");
+    res.type("jpg");
+    res.sendFile(path.join(__dirname, "../public/base.png"));
     return;
   }
 
