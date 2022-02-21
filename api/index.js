@@ -41,7 +41,7 @@ app.get("/", async (req, res) => {
           font,
           302,
           744,
-          `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`,
+          `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
           1621
         )
         .quality(100);
