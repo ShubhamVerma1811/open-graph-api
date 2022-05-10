@@ -12,7 +12,7 @@ app.get('/', async (req: Request, res: Response) => {
       args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
       defaultViewport: chromium.defaultViewport,
       executablePath: await chromium.executablePath,
-      headless: false,
+      headless: true,
       ignoreHTTPSErrors: true
     })
     // const browser = await chromium.puppeteer.launch()
@@ -39,13 +39,11 @@ app.get('/', async (req: Request, res: Response) => {
 
     await page.setContent(html)
     const take = await page.$('.image')
-    await take.screenshot({
-      path: 'screenshot.png'
-    })
+    const ss = await take.screenshot()
 
     res.setHeader('Content-Type', 'image/png')
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
-    res.sendFile(path.join(process.cwd(), 'screenshot.png'))
+    res.send(ss)
 
     await browser.close()
   } catch (err) {
