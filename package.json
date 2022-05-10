@@ -5,11 +5,16 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.2",
-    "jimp": "^0.16.1",
-    "sharp": "^0.29.3",
-    "text-svg": "^1.0.4"
+    "handlebars": "^4.7.7",
+    "puppeteer": "^13.7.0"
   },
   "devDependencies": {
-    "eslint": "^8.8.0"
+    "@types/eslint": "^8.4.2",
+    "@types/express": "^4.17.13",
+    "eslint": "^8.8.0",
+    "prettier": "^2.6.2"
+  },
+  "scripts": {
+    "format": "prettier --write **/*.{js,jsx,hbs,ts,tsx,html,css}"
   }
 }
