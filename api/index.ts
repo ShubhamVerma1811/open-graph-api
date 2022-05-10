@@ -1,14 +1,14 @@
+import chromium from 'chrome-aws-lambda'
 import express, { Request, Response } from 'express'
 import { readFileSync } from 'fs'
 import Handlebars from 'handlebars'
 import path from 'path'
-import puppeteer from 'puppeteer'
 
 const app = express()
 
 app.get('/', async (req: Request, res: Response) => {
   try {
-    const browser = await puppeteer.launch()
+    const browser = await chromium.puppeteer.launch()
     const [page] = await browser.pages()
 
     const { templateType = 'basic', title, date } = req.query
