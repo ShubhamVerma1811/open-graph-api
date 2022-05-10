@@ -8,7 +8,14 @@ const app = express()
 
 app.get('/', async (req: Request, res: Response) => {
   try {
-    const browser = await chromium.puppeteer.launch()
+    const browser = await chromium.puppeteer.launch({
+      args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: false,
+      ignoreHTTPSErrors: true
+    })
+    // const browser = await chromium.puppeteer.launch()
     const [page] = await browser.pages()
 
     const { templateType = 'basic', title, date } = req.query
