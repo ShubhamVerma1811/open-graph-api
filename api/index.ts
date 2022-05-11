@@ -18,14 +18,14 @@ app.get('/', async (req: Request, res: Response) => {
     // const browser = await chromium.puppeteer.launch()
     const [page] = await browser.pages()
 
-    const { templateType = 'basic', title, date } = req.query
+    const { template = 'basic', title, date } = req.query
 
-    const template = readFileSync(
-      path.join(process.cwd(), `src/templates/${templateType}/index.hbs`),
+    const _template = readFileSync(
+      path.join(process.cwd(), `src/templates/${template}/index.hbs`),
       'utf8'
     )
 
-    const html = Handlebars.compile(template)({
+    const html = Handlebars.compile(_template)({
       title,
       // get date in this format - 21st April 2020
       date:
@@ -40,12 +40,11 @@ app.get('/', async (req: Request, res: Response) => {
     await page.setContent(html)
     const take = await page.$('.image')
     const ss = await take.screenshot()
+    await browser.close()
 
     res.setHeader('Content-Type', 'image/png')
     res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
     res.send(ss)
-
-    await browser.close()
   } catch (err) {
     console.error(err)
     res.send('Error')
